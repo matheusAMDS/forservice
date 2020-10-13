@@ -4,6 +4,7 @@ import NextLink from 'next/link'
 import AppLayout from 'components/AppLayout'
 import Container from 'components/Container'
 import Paper from 'components/Paper'
+import { categories } from 'utils/category'
 
 const Home: React.FC = () => {
   return (
@@ -16,11 +17,11 @@ const Home: React.FC = () => {
         <Container>
           <Flex 
             w="full" 
-            justifyContent="center" 
+            justifyContent={{basis: "center", md: "space-between"}} 
             alignItems="center" 
             flexWrap="wrap"
           >
-            <Box mr={10} w="full" maxW={700}>
+            <Box w="full" maxW={500}>
               <Heading size="2xl">Bem vindo ao ForService</Heading>
               <Text fontSize={25} color="gray.600" fontWeight="semibold">
                 Encontre pequenos serviços e começe a trabalhar imediatamente!
@@ -47,21 +48,16 @@ const Home: React.FC = () => {
       <Container my={6}>
         <Heading>Aqui você encontrará serviços relacionados à</Heading>
         <Flex justifyContent="space-between" flexWrap="wrap" my={6}>
-          <Paper m={2} w={170}>
-            <Text fontWeight="semibold">Design e Multimídia</Text>
-          </Paper>
-          <Paper m={2} w={170}>
-            <Text fontWeight="semibold">Programação e TI</Text>
-          </Paper>
-          <Paper m={2} w={170}>
-            <Text fontWeight="semibold">Marketing e Vendas</Text>
-          </Paper>
-          <Paper m={2} w={170}>
-            <Text fontWeight="semibold">Tradução e Conteúdos</Text>
-          </Paper>
-          <Paper m={2} w={170}>
-            <Text fontWeight="semibold">Finanças e Administração</Text>
-          </Paper>
+          {categories.map(category => (
+            <NextLink 
+              href={`/services?category=${category.id}`} 
+              key={category.id}
+            >
+              <Paper m={2} w={170} cursor="pointer">
+                <Text fontWeight="semibold">{category.name}</Text>
+              </Paper>
+            </NextLink>
+          ))}
         </Flex>
       </Container>
     </AppLayout>
